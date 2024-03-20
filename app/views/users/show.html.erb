@@ -1,5 +1,5 @@
 <h1><%= "#{@user.name}'s Dashboard" %></h1><br>
-
+<%= link_to "Discover Page", user_discover_path(user_id: params[:id]), class: "btn btn-primary" %>
 <section class="viewing_parties">
   <% @user.viewing_parties.each do |party| %>
     <div class="viewing_party">
