@@ -1,0 +1,28 @@
+<h1><%= @movie[:original_title] %></h1>
+
+<%= link_to "Discover Page", user_discover_path(user_id: params[:user_id]), class: "btn btn-primary" %>
+
+<%= link_to "Create Viewing Party for #{@movie[:original_title]}", new_user_movie_viewing_party_path(user_id: params[:user_id], movie_id: params[:id]), class: "btn btn-primary" %>
+
+<p>Vote Average: <%= @movie[:vote_average] %></p>
+<p>Runtime: <%= @movie[:runtime] %></p>
+<p>Genres: <%= @movie[:genres].map{ |genre| genre[:name] }.join(", ") %></p>
+<p>Summary Description: <%= @movie[:overview]%></p>
+
+<h2>Cast Members</h2>
+    <ul>
+        <% @movie[:credits][:cast].first(10).each do |cast_member| %>
+            <li class="cast"><%= cast_member[:name] %>- <%= cast_member[:character] %></li>
+        <% end %>
+    </ul>
+
+<h2>Total Reviews: <%=@movie[:reviews][:results].count%></h2>
+    <ul>
+        <% @movie[:reviews][:results].each do |result| %>
+            <li><%= result[:author]%><br>
+                <%= result[:content]%></li>
+        <% end %>
+    </ul>
+
+
+
