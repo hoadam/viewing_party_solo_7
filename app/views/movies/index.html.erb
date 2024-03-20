@@ -1,0 +1,22 @@
+
+<%= link_to "Discover Page", user_discover_path(user_id: params[:user_id]), class: "btn btn-primary" %>
+
+<% if @top_rated_movies.present? %>
+    <h1> Top Rated Movies </h1>
+    <% @top_rated_movies.each do |top_rated_movie| %>
+        <div class="top_rated_movies">
+        <%= link_to top_rated_movie[:title], user_movie_path(user_id: params[:user_id], id: top_rated_movie[:id]) %>
+        <%= top_rated_movie[:vote_average] %>
+        </div>
+    <% end %>
+<% end %>
+
+<% if @search_movies.present? %>
+    <h1>Movies results for: <%= params[:q] %> </h1>
+    <% @search_movies.each do |search_movie| %>
+        <div class="search_movies">
+        <%= link_to search_movie[:title], user_movie_path(user_id: params[:user_id], id: search_movie[:id]) %>
+        <%= search_movie[:vote_average] %>
+        </div>
+    <% end %>
+<% end %>
