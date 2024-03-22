@@ -1,0 +1,31 @@
+<h1><%= "Create a Movie Party for #{@movie[:original_title]}" %></h1>
+<%= link_to "Discover Page", user_discover_path(user_id: params[:user_id]), class: "btn btn-primary" %>
+
+<h2>Viewing Party Details</h2>
+<p>Movie Title: <%= @movie[:original_title] %></p>
+<%= form_with model: @viewing_party, url: user_movie_viewing_parties_path(params[:user_id],params[:movie_id]), data: {turbo: false}, local: true do |f| %>
+    <%= f.hidden_field :movie_id, value: params[:movie_id]%>
+    
+    <%= f.label :duration, "Duration of Party"  %>
+    <%= f.text_field :duration, class: "form-control" %>
+
+    <%= f.label :date, "Day"  %>
+    <%= f.text_field :date, class: "form-control" %>
+
+    <%= f.label :start_time, "Start Time"  %>
+    <%= f.text_field :start_time, class: "form-control" %>
+
+    <%= f.label :guest1_email, "Guest 1 Email"  %>
+    <%= f.text_field :guest1_email, optional: true, class: "form-control" %>
+
+    <%= f.label :guest2_email, "Guest 2 Email"  %>
+    <%= f.text_field :guest2_email, optional: true, class: "form-control" %>
+
+    <%= f.label :guest3_email, "Guest 3 Email"  %>
+    <%= f.text_field :guest3_email, optional: true, class: "form-control" %>
+
+    <%= f.submit "Create Party", class: "btn btn-primary" %>
+<% end %>
+
+    
+
