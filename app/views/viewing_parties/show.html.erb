@@ -1,0 +1,18 @@
+<h1>Viewing Party</h1>
+
+<h2>To Rent:</h2>
+<div class="rent_providers">
+<% @us_providers[:rent].each do |provider| %>
+    <%= image_tag(@image_base_url + provider[:logo_path])%>
+
+<% end %>
+</div>
+
+<h2>To Buy:</h2>
+<div class="buy_providers">
+<% @us_providers[:buy].each do |provider| %>
+    <%= image_tag(@image_base_url + provider[:logo_path])%>
+<% end %>
+</div>
+
+<p>Buy/Rent data provided by JustWatch</p>
