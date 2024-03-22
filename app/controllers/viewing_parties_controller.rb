@@ -26,7 +26,7 @@ class ViewingPartiesController < ApplicationController
 
   def show
     get_providers(params[:movie_id])
-    get_image
+    @image_base_url = get_image_base_url
   end
 
   private
@@ -77,7 +77,7 @@ class ViewingPartiesController < ApplicationController
     @us_providers = data[:results][:US]
   end
 
-  def get_image
+  def get_image_base_url
     conn = Faraday.new(url: 'https://api.themoviedb.org') do |faraday|
       faraday.headers['Authorization'] =
         'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYmNkNTNjOTBjMjE3NmVmYTg3MDY3NGM2N2NjNjAxNSIsInN1YiI6IjY1ZjkwY2FkMzg0NjlhMDE0OTdkNTI0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.P64TF2h_KOK6_bJc8o777vt23F71GxnoiAPCosoTj34'
@@ -86,6 +86,7 @@ class ViewingPartiesController < ApplicationController
     response = conn.get("/3/configuration")
     data = JSON.parse(response.body, symbolize_names: true)
 
-    @image_base_url = data[:images][:secure_base_url] + data[:images][:logo_sizes][0]
+    data[:images][:secure_base_url] + data[:images][:logo_sizes][0]
   end
+
 end
