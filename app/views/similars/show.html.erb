@@ -1,0 +1,11 @@
+<h1>Similar Movies</h1>
+
+<% @similar_movies.each do |movie| %>
+    <div class="similar_movie">
+        Title: <%= movie[:original_title] %><br>
+        Summary: <%= movie[:overview] %><br>
+        Release Date: <%= movie[:release_date] %><br>
+        Vote Average: <%= movie[:vote_average] %><br>
+        <%= image_tag(@image_base_url.to_s + movie[:poster_path].to_s) %><br>
+    </div>
+<% end %>
