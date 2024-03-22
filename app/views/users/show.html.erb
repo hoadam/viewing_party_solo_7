@@ -2,7 +2,7 @@
 <%= link_to "Discover Page", user_discover_path(user_id: params[:id]), class: "btn btn-primary" %>
 <section class="viewing_parties">
   <% @user.viewing_parties.each do |party| %>
-    <div class="viewing_party">
+    <div class="viewing_party_<%=party.id%>">
          Party Time: <%= party.date %> at <%= party.start_time %><br>
          Host: <%= party.find_host.name %><br>
          Who's Coming? <br/>
@@ -12,7 +12,11 @@
                <li><%= attendee.name %> </li>
             <% end %>
          </ol>
-
+        
+        <% if party.movie_id != nil %>
+          Movie Title: <%= @movie_info[party.id][:title] %>
+          <%= image_tag(@movie_info[party.id][:poster]) %>
+        <% end %>
     </div><br>
   <% end %>
 </section>
