@@ -88,5 +88,4 @@ class ViewingPartiesController < ApplicationController
 
     data[:images][:secure_base_url] + data[:images][:logo_sizes][0]
   end
-
 end
