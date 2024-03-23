@@ -1,9 +1,8 @@
 class ViewingPartiesController < ApplicationController
-
   def new
     @movie = get_movie_details(params[:movie_id])
 
-    @viewing_party = ViewingParty.new(duration: @movie[:runtime])
+    @viewing_party = ViewingParty.new(duration: @movie.runtime)
   end
 
   def create
@@ -26,20 +25,16 @@ class ViewingPartiesController < ApplicationController
 
   def show
     get_providers(params[:movie_id])
-    @image_base_url = get_image_base_url
+
+    movie_service = MovieService.new
+    @image_base_url = movie_service.get_image_base_url
+
   end
 
   private
   def get_movie_details(movie_id)
-    conn = Faraday.new(url: 'https://api.themoviedb.org') do |faraday|
-      faraday.headers['Authorization'] =
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYmNkNTNjOTBjMjE3NmVmYTg3MDY3NGM2N2NjNjAxNSIsInN1YiI6IjY1ZjkwY2FkMzg0NjlhMDE0OTdkNTI0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.P64TF2h_KOK6_bJc8o777vt23F71GxnoiAPCosoTj34'
-    end
-
-    response = conn.get("/3/movie/#{movie_id}?append_to_response=reviews%2Ccredits")
-    data = JSON.parse(response.body, symbolize_names: true)
-
-    data
+    movie_service = MovieService.new
+    movie_service.movie_details(movie_id)
   end
 
   def viewing_party_params
@@ -66,26 +61,9 @@ class ViewingPartiesController < ApplicationController
   end
 
   def get_providers(movie_id)
-    conn = Faraday.new(url: 'https://api.themoviedb.org') do |faraday|
-      faraday.headers['Authorization'] =
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYmNkNTNjOTBjMjE3NmVmYTg3MDY3NGM2N2NjNjAxNSIsInN1YiI6IjY1ZjkwY2FkMzg0NjlhMDE0OTdkNTI0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.P64TF2h_KOK6_bJc8o777vt23F71GxnoiAPCosoTj34'
-    end
-
-    response = conn.get("/3/movie/#{movie_id}/watch/providers")
-    data = JSON.parse(response.body, symbolize_names: true)
-
-    @us_providers = data[:results][:US]
+    movie_service = MovieService.new
+    @us_providers = movie_service.provider_details(movie_id)
   end
 
-  def get_image_base_url
-    conn = Faraday.new(url: 'https://api.themoviedb.org') do |faraday|
-      faraday.headers['Authorization'] =
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYmNkNTNjOTBjMjE3NmVmYTg3MDY3NGM2N2NjNjAxNSIsInN1YiI6IjY1ZjkwY2FkMzg0NjlhMDE0OTdkNTI0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.P64TF2h_KOK6_bJc8o777vt23F71GxnoiAPCosoTj34'
-    end
 
-    response = conn.get("/3/configuration")
-    data = JSON.parse(response.body, symbolize_names: true)
-
-    data[:images][:secure_base_url] + data[:images][:logo_sizes][0]
-  end
 end

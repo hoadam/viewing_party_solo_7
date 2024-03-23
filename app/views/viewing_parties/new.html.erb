@@ -1,8 +1,8 @@
-<h1><%= "Create a Movie Party for #{@movie[:original_title]}" %></h1>
+<h1><%= "Create a Movie Party for #{@movie.title}" %></h1>
 <%= link_to "Discover Page", user_discover_path(user_id: params[:user_id]), class: "btn btn-primary" %>
 
 <h2>Viewing Party Details</h2>
-<p>Movie Title: <%= @movie[:original_title] %></p>
+<p>Movie Title: <%= @movie.title %></p>
 <%= form_with model: @viewing_party, url: user_movie_viewing_parties_path(params[:user_id],params[:movie_id]), data: {turbo: false}, local: true do |f| %>
     <%= f.hidden_field :movie_id, value: params[:movie_id]%>
     

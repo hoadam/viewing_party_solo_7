@@ -18,7 +18,7 @@ RSpec.describe 'The New Viewing Party Page', type: :feature do
       fill_in "Guest 2 Email", with: "elizabeth@email.com"
 
       click_on "Create Party"
-      save_and_open_page
+
       expect(current_path).to eq(user_path(@user1.id))
       expect(page).to have_content("Successfully Created New Viewing Party")
       expect(page).to have_content("Movie Title: The Dark Knight")
@@ -26,8 +26,6 @@ RSpec.describe 'The New Viewing Party Page', type: :feature do
       expect(page).to have_content("Tommy")
       expect(page).to have_content("Jerry")
       expect(page).to have_content("Elizabeth")
-
-      save_and_open_page
     end
   end
 end

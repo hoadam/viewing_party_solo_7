@@ -23,7 +23,7 @@ RSpec.describe 'User Show Page', type: :feature do
     it "shows the details of user's viewing party" do
       VCR.use_cassette('tmdb_movies_logo') do
         visit user_path(@user1.id)
-        save_and_open_page
+
         within ".viewing_party_#{@viewing_party_1.id}" do
           expect(page).to have_content(@viewing_party_1.date)
           expect(page).to have_content(@viewing_party_1.start_time)
@@ -41,7 +41,6 @@ RSpec.describe 'User Show Page', type: :feature do
           expect(page).to have_content(@user3.name)
         end
       end
-
     end
   end
 end
