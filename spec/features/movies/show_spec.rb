@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Movie Show Page', type: :feature do
   describe 'When a user visits movie show page' do
     before(:each) do
-      @user = User.create!(name: 'Tommy', email: 'tommy@email.com')
+      @user = User.create!(name: 'Tommy', email: 'tommy@email.com', password: 'tommy123',
+                           password_confirmation: 'tommy123')
     end
 
     it 'shows 2 links to return to the Discover Page and to create a viewing party, and all the details of the movie' do

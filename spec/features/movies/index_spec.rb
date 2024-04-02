@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Movies Index Page', type: :feature do
   describe 'When user visits movie result page' do
     before(:each) do
-      @user = User.create!(name: 'Tommy', email: 'tommy@email.com')
+      @user = User.create!(name: 'Tommy', email: 'tommy@email.com', password: 'tommy123',
+                           password_confirmation: 'tommy123')
     end
 
     it 'shows the results of 20 top rated movies' do
