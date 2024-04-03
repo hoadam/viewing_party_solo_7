@@ -1,5 +1,4 @@
-<h1><%= "#{@user.name}'s Dashboard" %></h1><br>
-<%= link_to "Discover Page", user_discover_path(user_id: params[:id]), class: "btn btn-primary" %>
+<h1><%= "Admin View for #{@user.name}'s Dashboard" %></h1><%= link_to "Discover Page", user_discover_path(user_id: params[:id]), class: "btn btn-primary" %>
 <p> Location: <%= cookies[:location] %> </p>
 <section class="viewing_parties">
   <% @user.viewing_parties.each do |party| %>
@@ -14,7 +13,7 @@
             <% end %>
          </ol>
         
-        <% if party.movie_id != nil %>
+        <% if party.movie_id && @movie_info %>
           Movie Title: <%= @movie_info[party.id][:title] %>
           <%= image_tag(@movie_info[party.id][:poster]) %>
         <% end %>

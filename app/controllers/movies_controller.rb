@@ -44,5 +44,4 @@ class MoviesController < ApplicationController
 
     @movie = data
   end
-
 end

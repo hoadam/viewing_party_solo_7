@@ -7,4 +7,10 @@ class User < ApplicationRecord
   has_secure_password
   has_many :user_parties
   has_many :viewing_parties, through: :user_parties
+
+  enum role: %w[default admin]
+
+  def self.default_users
+    where(role: 0)
+  end
 end

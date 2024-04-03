@@ -24,12 +24,20 @@ RSpec.describe 'Root Page, Welcome Index', type: :feature do
       expect(page).to have_selector(:link_or_button, 'Login to my account')
     end
 
-    it "They see a list of existing users, which links to the individual user's dashboard" do
+    it "They see a list of existing users, which links to the individual user's dashboard", :vcr do
+      click_on 'Login to my account'
+      expect(current_path).to eq(user_login_path)
+
+      fill_in 'Email:', with: 'tommy_t@gmail.com'
+      fill_in 'Password:', with: 'tommy123'
+      fill_in 'Location:', with: 'Denver, CO'
+      click_on 'Login'
+
+      visit root_path
+
       within('#existing_users') do
         expect(page).to have_content(User.first.email)
         expect(page).to have_content(User.last.email)
-        expect(page).to have_link("#{User.first.email}", href: "users/#{User.first.id}")
-        expect(page).to have_link("#{User.last.email}", href: "users/#{User.last.id}")
       end
     end
 

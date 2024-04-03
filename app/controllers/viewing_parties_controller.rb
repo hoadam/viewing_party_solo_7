@@ -15,11 +15,11 @@ class ViewingPartiesController < ApplicationController
 
       create_guests(viewing_party, guests_params)
 
-      flash[:success] = "Successfully Created New Viewing Party"
+      flash[:success] = 'Successfully Created New Viewing Party'
       redirect_to user_path(user)
     else
       flash[:error] = "#{error_message(viewing_party.errors)}"
-      redirect_to new_user_movie_viewing_party_path(user,params[:movie_id])
+      redirect_to new_user_movie_viewing_party_path(user, params[:movie_id])
     end
   end
 
@@ -28,10 +28,10 @@ class ViewingPartiesController < ApplicationController
 
     movie_service = MovieService.new
     @image_base_url = movie_service.get_image_base_url
-
   end
 
   private
+
   def get_movie_details(movie_id)
     movie_service = MovieService.new
     movie_service.movie_details(movie_id)
@@ -42,17 +42,15 @@ class ViewingPartiesController < ApplicationController
   end
 
   def create_host(viewing_party, user)
-    UserParty.create!(viewing_party: viewing_party, user: user, host: true)
+    UserParty.create!(viewing_party:, user:, host: true)
   end
 
   def create_guests(viewing_party, guests_params)
     guests_params.values.each do |email|
-      if !email.blank?
-        guest = User.find_by(email: email)
-        if guest
-          UserParty.create!(viewing_party: viewing_party, user: guest, host: false)
-        end
-      end
+      next if email.blank?
+
+      guest = User.find_by(email:)
+      UserParty.create!(viewing_party:, user: guest, host: false) if guest
     end
   end
 
@@ -64,6 +62,4 @@ class ViewingPartiesController < ApplicationController
     movie_service = MovieService.new
     @us_providers = movie_service.provider_details(movie_id)
   end
-
-
 end

@@ -23,6 +23,15 @@ RSpec.describe 'User Show Page', type: :feature do
 
     it "shows the details of user's viewing party" do
       VCR.use_cassette('tmdb_movies_logo') do
+        visit root_path
+        click_on 'Login to my account'
+        expect(current_path).to eq(user_login_path)
+
+        fill_in 'Email:', with: 'tommy@email.com'
+        fill_in 'Password:', with: 'tommy123'
+        fill_in 'Location:', with: 'Denver, CO'
+        click_on 'Login'
+
         visit user_path(@user1.id)
 
         within ".viewing_party_#{@viewing_party_1.id}" do
